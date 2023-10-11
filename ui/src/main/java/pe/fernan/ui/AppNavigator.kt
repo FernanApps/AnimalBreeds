@@ -36,7 +36,7 @@ import pe.fernan.ui.favorites.FavoritesScreen
 import pe.fernan.ui.images.ImagesScreen
 import pe.fernan.ui.selector.SelectorScreen
 import pe.fernan.ui.splash.SplashScreen
-import pe.fernan.ui.theme.DogBreedsTheme
+import pe.fernan.ui.theme.AnimalBreedsTheme
 
 
 val ANIMAL_IMAGES_ARGUMENT_KEY = "breed"
@@ -200,7 +200,7 @@ fun MyNavHost(navController: NavHostController) {
 fun AppNavigator() {
     val navController: NavHostController = rememberNavController()
 
-    DogBreedsTheme {
+    AnimalBreedsTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
         ) {

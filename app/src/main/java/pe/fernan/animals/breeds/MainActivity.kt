@@ -1,4 +1,4 @@
-package pe.fernan.dogbreeds
+package pe.fernan.animals.breeds
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

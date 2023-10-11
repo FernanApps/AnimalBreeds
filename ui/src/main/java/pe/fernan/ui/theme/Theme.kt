@@ -79,7 +79,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun DogBreedsTheme(
+fun AnimalBreedsTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

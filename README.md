@@ -29,7 +29,7 @@ Anyone keen to dive into modern Android development—AnimalBreeds is your guide
 
 ![screenshots](./art/screenshots.png)
 
-[//]: # (![app]&#40;./art/gifs/dogiz-gif2.gif&#41;)
+[//]: # (![app]&#40;./art/gifs/Animal Breeds-gif2.gif&#41;)
 
 ## 🧱 Clean Architecture in Android with Kotlin
 
@@ -139,5 +139,5 @@ even better, submit a pull request to make "AnimalBreeds" even more robust.
 ---
 
 ## Inspired by :heart:
-Also, __[follow](https://github.com/RubyLichtenstein/Dogiz)__ 😅
+Also, __[follow](https://github.com/RubyLichtenstein/Animal Breeds)__ 😅
 

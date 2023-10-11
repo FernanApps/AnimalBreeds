@@ -15,10 +15,10 @@ import javax.inject.Singleton
 class BreedsDataStore @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
-    private val dogBreedsKey = stringPreferencesKey("dog_breeds")
+    private val animalBreedsKey = stringPreferencesKey("animal_breeds")
 
     val get: Flow<List<BreedInfoImpl>?> = dataStore.data.map { preferences ->
-        preferences[dogBreedsKey]?.let { json ->
+        preferences[animalBreedsKey]?.let { json ->
             try {
                 Json.decodeFromString<List<BreedInfoImpl>>(json)
             } catch (e: Exception) {
@@ -30,7 +30,7 @@ class BreedsDataStore @Inject constructor(
     suspend fun save(breeds: List<BreedInfoImpl>) {
         val json = Json.encodeToString(breeds)
         dataStore.edit { preferences ->
-            preferences[dogBreedsKey] = json
+            preferences[animalBreedsKey] = json
         }
     }
 }

@@ -28,7 +28,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import pe.fernan.ui.R
 import pe.fernan.ui.Screen
-import pe.fernan.ui.theme.DogBreedsTheme
+import pe.fernan.ui.theme.AnimalBreedsTheme
 import pe.fernan.ui.theme.darkPurple
 import kotlinx.coroutines.delay
 
@@ -89,7 +89,7 @@ fun Splash(title: String, alpha: Float) {
 fun SplashScreenPreview() {
     val navController: NavHostController = rememberNavController()
 
-    DogBreedsTheme() {
+    AnimalBreedsTheme() {
         SplashScreen(navController)
     }
 

@@ -5,12 +5,14 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+val appId = "pe.fernan.animals.breeds"
+
 android {
-    namespace = "com.fernan.dogbreeds"
+    namespace = appId
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "pe.fernan.dogbreeds"
+        applicationId = appId
         minSdk = 21
         targetSdk = 34
         versionCode = 1

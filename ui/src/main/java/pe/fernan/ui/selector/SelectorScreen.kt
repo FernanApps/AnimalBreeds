@@ -21,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import pe.fernan.ui.R
 import pe.fernan.ui.Screen
 import pe.fernan.ui.composables.bounceClick
-import pe.fernan.ui.theme.DogBreedsTheme
+import pe.fernan.ui.theme.AnimalBreedsTheme
 import pe.fernan.ui.theme.darkPurple
 
 
@@ -67,7 +67,7 @@ fun SelectorScreen(navController: NavController) {
 fun SplashSelectorScreen() {
     val navController: NavHostController = rememberNavController()
 
-    DogBreedsTheme() {
+    AnimalBreedsTheme() {
         SelectorScreen(navController)
     }
 

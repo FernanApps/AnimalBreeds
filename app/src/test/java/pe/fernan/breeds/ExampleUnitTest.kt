@@ -1,4 +1,4 @@
-package pe.fernan.dogbreeds
+package pe.fernan.breeds
 
 import org.junit.Test
 

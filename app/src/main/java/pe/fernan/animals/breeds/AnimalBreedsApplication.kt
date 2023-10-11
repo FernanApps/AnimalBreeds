@@ -1,7 +1,7 @@
-package pe.fernan.dogbreeds
+package pe.fernan.animals.breeds
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class DogBreedsApplication : Application()
+class AnimalBreedsApplication : Application()

@@ -61,7 +61,7 @@ fun BreedsScreen(
             LargeTopAppBar(
                 title = {
                     Text(
-                        "Dogiz",
+                        "Animal Breeds",
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
