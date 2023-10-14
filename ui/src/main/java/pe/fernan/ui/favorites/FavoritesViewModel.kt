@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewModelScope
 import pe.fernan.domain.favorites.GetFavoriteImagesUseCase
 import pe.fernan.domain.favorites.ToggleFavoriteUseCase
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import pe.fernan.ui.common.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -41,7 +41,7 @@ class FavoritesViewModel @Inject constructor(
         initialValue = 0
     )
 
-    fun toggleFavorite(breedImage: DogImage) {
+    fun toggleFavorite(breedImage: AnimalImage) {
         viewModelScope.launch {
             toggleFavoriteUseCase(breedImage)
         }

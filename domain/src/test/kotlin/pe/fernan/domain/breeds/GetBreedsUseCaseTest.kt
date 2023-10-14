@@ -28,6 +28,7 @@ class GetBreedsUseCaseTest {
         fakeBreedsRepository.breedsData =
             listOf(
                 object : BreedInfo {
+                    override val id: String = "dog"
                     override val name: String = "Dog"
                     override val subBreedsNames: List<String> = listOf("Lab", "Husky")
                 },

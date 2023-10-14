@@ -12,14 +12,14 @@ class GetBreedImagesUseCaseTest {
 
     @BeforeEach
     fun setUp() {
-        val element1 = DogImage(
+        val element1 = AnimalImage(
             url = "sampleUrl1.com",
             isFavorite = false,
             breedName = "Dog",
             breedKey = "Dog"
         )
 
-        val element2 = DogImage(
+        val element2 = AnimalImage(
             url = "sampleUrl2.com",
             isFavorite = true,
             breedName = "Dog",

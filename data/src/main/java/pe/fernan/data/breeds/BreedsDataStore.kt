@@ -1,23 +1,20 @@
 package pe.fernan.data.breeds
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import pe.fernan.data.DataStoreManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class BreedsDataStore @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStoreManager: DataStoreManager
 ) {
-    private val animalBreedsKey = stringPreferencesKey("animal_breeds")
+    private val animalBreedsKey = "animal_breeds"
 
-    val get: Flow<List<BreedInfoImpl>?> = dataStore.data.map { preferences ->
+    /*val get: Flow<List<BreedInfoImpl>?> = dataStore.data.map { preferences ->
         preferences[animalBreedsKey]?.let { json ->
             try {
                 Json.decodeFromString<List<BreedInfoImpl>>(json)
@@ -25,12 +22,39 @@ class BreedsDataStore @Inject constructor(
                 null
             }
         }
+    }*/
+
+
+    fun get(animalKey: String) =
+        dataStoreManager.getOrNull<String>(animalBreedsKey + animalKey).map { jsonOrNull ->
+            jsonOrNull?.let { json ->
+                try {
+                    Json.decodeFromString<List<BreedInfoImpl>>(json)
+                } catch (e: Exception) {
+                    null
+                }
+            }
+        }
+
+//    val get: Flow<List<BreedInfoImpl>?> =
+//        dataStoreManager.getOrNull<String>(animalBreedsKey).map { jsonOrNull ->
+//            jsonOrNull?.let { json ->
+//            try {
+//                Json.decodeFromString<List<BreedInfoImpl>>(json)
+//            } catch (e: Exception) {
+//                null
+//            }
+//        }
+//    }
+
+
+    suspend fun save(animalKey: String, breeds: List<BreedInfoImpl>) {
+        val json = Json.encodeToString(breeds)
+        dataStoreManager.putString(animalBreedsKey + animalKey, json)
     }
 
-    suspend fun save(breeds: List<BreedInfoImpl>) {
-        val json = Json.encodeToString(breeds)
-        dataStore.edit { preferences ->
-            preferences[animalBreedsKey] = json
-        }
-    }
+
 }
+
+
+

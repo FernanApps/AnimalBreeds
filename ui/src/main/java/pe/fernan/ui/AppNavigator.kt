@@ -97,7 +97,26 @@ sealed class Screen(
     data object Selector : Screen("selector")
     data object BreedsList : Screen("breedsList", argKeys = listOf(ANIMAL_TYPE_ARGUMENT_KEY))
     data object Favorites : Screen("favorites")
-    data object AnimalImages : Screen(baseRoute = "animalImages", argKeys = listOf(ANIMAL_IMAGES_ARGUMENT_KEY))
+    data object AnimalImages :
+        Screen(baseRoute = "animalImages", argKeys = listOf(ANIMAL_IMAGES_ARGUMENT_KEY)) {
+
+        private const val guion = '_'
+        fun passValues(breedRoute: String, breedTitle: String): String {
+            return passValue("${breedTitle}$guion$breedRoute")
+        }
+
+        fun getValues(argKey: String): List<String>? {
+            val breedArg = getArgumentValue(argKey) ?: return null
+            val breedArgSplit = breedArg.split(guion)
+
+            val title = breedArgSplit.getOrNull(0) ?: return null
+            val id = breedArgSplit.getOrNull(1) ?: return null
+            val subBreed = breedArgSplit.getOrNull(2) ?: ""
+
+            return listOf(id, title, subBreed)
+
+        }
+    }
 
 }
 
@@ -174,17 +193,15 @@ fun MyNavHost(navController: NavHostController) {
          */
         composable(
             screen = Screen.AnimalImages
-        ) {  screen ->
-            val breedArg = screen.getArgumentValue(ANIMAL_IMAGES_ARGUMENT_KEY)
+        ) { screen ->
+            val breedArg = (screen as Screen.AnimalImages).getValues(ANIMAL_IMAGES_ARGUMENT_KEY)
             if (breedArg != null) {
+                val (breedId, breedTitle, subBreed) = breedArg
                 // Split the 'breedArg' to separate the breed and sub-breed, if applicable.
-                val (breed, subBreed) = breedArg.split('_').let {
-                    it[0] to it.getOrNull(1)
-                }
-
                 ImagesScreen(
                     navController = navController,
-                    breed = breed,
+                    breedId = breedId,
+                    breedTitle = breedTitle,
                     subBreed = subBreed
                 )
             }
@@ -232,8 +249,9 @@ val bottomNavItems = listOf(
     Screen.BreedsList,
     Screen.Favorites
 )
+
 @Composable
-fun BottomNavigation(navController: NavHostController){
+fun BottomNavigation(navController: NavHostController) {
 
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

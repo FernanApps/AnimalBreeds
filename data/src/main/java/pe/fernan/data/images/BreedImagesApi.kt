@@ -4,10 +4,15 @@ import pe.fernan.data.KtorHttpClient
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-const val BASE_URL = "https://dog.ceo/api/"
+
+
+const val BASE_URL_DOG = "https://dog.ceo/api/"
+
+// https://api.thecatapi.com/v1/breeds?limit=10&page=0
+const val BASE_URL_CAT = "https://api.thecatapi.com/v1/"
 
 interface BreedImagesApi {
-    suspend fun getBreedImages(breed: String): List<String>
+    suspend fun getBreedImages(animalKey: String, breed: String): List<String>
 }
 
 class BreedImagesApiImpl @Inject constructor(
@@ -29,9 +34,10 @@ class BreedImagesApiImpl @Inject constructor(
      * 2. To get images for a sub-breed:
      *      getBreedImages("shepherd/australian")
      */
-    override suspend fun getBreedImages(breed: String): List<String> {
+    override suspend fun getBreedImages(animalKey: String, breed: String): List<String> {
+        // Cat Or Dog
         return client.safeApiCall {
-            get("${BASE_URL}breed/$breed/images")
+            get("${BASE_URL_DOG}breed/$breed/images")
         }
     }
 }

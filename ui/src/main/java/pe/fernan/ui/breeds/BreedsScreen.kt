@@ -2,6 +2,7 @@
 
 package pe.fernan.ui.breeds
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -40,8 +41,15 @@ fun BreedsScreen(
 
     BreedsScreen(
         breedListState = breedListState,
-        navigateToDogImages = { breedItem ->
-            navController.navigate(Screen.AnimalImages.passValue(breedItem.route))
+        navigateToDogImages = { breedItem: BreedEntity ->
+            Log.d("BreedsScreen", "breedItem $breedItem")
+            navController.navigate(
+                Screen.AnimalImages.passValues(
+                    breedTitle = breedItem.name,
+                    breedRoute = breedItem.route
+                )
+            )
+            //navController.navigate(Screen.AnimalImages.passValue(breedItem.route))
         }
     )
 }

@@ -3,7 +3,7 @@ package pe.fernan.ui.favorites
 import app.cash.molecule.RecompositionMode
 import app.cash.molecule.moleculeFlow
 import app.cash.turbine.test
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import pe.fernan.ui.common.UiState
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
@@ -18,7 +18,7 @@ class FavoritesPresenterTest {
     @Test
     fun `FavoritesPresenter starts with loading state`() = runTest {
         val eventFlow = MutableSharedFlow<Event>()
-        val favoriteImagesFlow = flowOf<List<DogImage>>()  // An empty flow
+        val favoriteImagesFlow = flowOf<List<AnimalImage>>()  // An empty flow
 
         moleculeFlow(RecompositionMode.Immediate) {
             FavoritesPresenter(eventFlow, favoriteImagesFlow)
@@ -31,7 +31,7 @@ class FavoritesPresenterTest {
     @Test
     fun `FavoritesPresenter handles error state`() = runTest {
         val eventFlow = MutableSharedFlow<Event>()
-        val favoriteImagesFlow = flow<List<DogImage>> {
+        val favoriteImagesFlow = flow<List<AnimalImage>> {
             throw RuntimeException("Error loading images")
         }
 
@@ -79,7 +79,7 @@ class FavoritesPresenterTest {
         val eventFlow = MutableSharedFlow<Event>()
         val favoriteImagesFlow = flowOf(
             listOf(
-                DogImage(
+                AnimalImage(
                     "Husky1",
                     "Husky",
                     true,
@@ -126,7 +126,7 @@ class FavoritesPresenterTest {
     @Test
     fun `FavoritesPresenter returns error state if flow errors`() = runTest {
         val eventFlow = MutableSharedFlow<Event>()
-        val favoriteImagesFlow = flow<List<DogImage>> {
+        val favoriteImagesFlow = flow<List<AnimalImage>> {
             throw RuntimeException("Error fetching images")
         }
 
@@ -142,7 +142,7 @@ class FavoritesPresenterTest {
     @Test
     fun `FavoritesPresenter returns success state with no images`() = runTest {
         val eventFlow = MutableSharedFlow<Event>()
-        val favoriteImagesFlow = flowOf(emptyList<DogImage>())
+        val favoriteImagesFlow = flowOf(emptyList<AnimalImage>())
 
         moleculeFlow(RecompositionMode.Immediate) {
             FavoritesPresenter(eventFlow, favoriteImagesFlow)

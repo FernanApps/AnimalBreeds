@@ -11,7 +11,7 @@ import pe.fernan.data.favorites.FavoritesRepositoryImpl
 import pe.fernan.data.images.AppDatabase
 import pe.fernan.data.images.BreedImagesApi
 import pe.fernan.data.images.BreedImagesApiImpl
-import pe.fernan.data.images.DogImageDao
+import pe.fernan.data.images.AnimalImageDao
 import pe.fernan.data.images.ImagesRepositoryImpl
 import pe.fernan.domain.breeds.data.BreedsRepository
 import pe.fernan.domain.favorites.FavoritesRepository
@@ -21,13 +21,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import pe.fernan.data.animals.AnimalDataStore
+import pe.fernan.data.animals.AnimalRepositoryImpl
+import pe.fernan.domain.animals.AnimalRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
-    private val Context.dataStore by preferencesDataStore("dog_breeds")
+    private val Context.dataStore by preferencesDataStore("animal_breeds")
 
     @Provides
     @Singleton
@@ -47,10 +50,15 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideFavoritesRepository(dogImageDao: DogImageDao): FavoritesRepository {
-        return FavoritesRepositoryImpl(dogImageDao)
+    fun provideDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager {
+        return DataStoreManager(dataStore)
     }
 
+    @Provides
+    @Singleton
+    fun provideFavoritesRepository(animalDataStore: AnimalDataStore, dogImageDao: AnimalImageDao): FavoritesRepository {
+        return FavoritesRepositoryImpl(animalDataStore,dogImageDao)
+    }
 
     @Provides
     @Singleton
@@ -60,7 +68,7 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideDogImageDao(database: AppDatabase): DogImageDao {
+    fun provideDogImageDao(database: AppDatabase): AnimalImageDao {
         return database.dogImageDao()
     }
 
@@ -68,11 +76,24 @@ object DataModule {
     @Singleton
     fun provideBreedsRepository(
         dogBreedApiService: BreedsRemoteApi,
-        breedsDataStore: BreedsDataStore
+        animalDataStore: AnimalDataStore,
+        breedsDataStore: BreedsDataStore,
     ): BreedsRepository {
         return BreedsRepositoryImpl(
             dogBreedApiService,
+            animalDataStore,
             breedsDataStore
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideAnimalRepository(
+        animalDataStore: AnimalDataStore
+    ): AnimalRepository {
+        return AnimalRepositoryImpl(
+            animalDataStore,
         )
     }
 
@@ -80,11 +101,13 @@ object DataModule {
     @Singleton
     fun provideBreedImagesRepository(
         dogBreedApiService: BreedImagesApi,
-        dogImageDao: DogImageDao
+        dogImageDao: AnimalImageDao,
+        animalDataStore: AnimalDataStore
     ): ImagesRepository {
         return ImagesRepositoryImpl(
             dogBreedApiService,
-            dogImageDao
+            dogImageDao,
+            animalDataStore
         )
     }
 }

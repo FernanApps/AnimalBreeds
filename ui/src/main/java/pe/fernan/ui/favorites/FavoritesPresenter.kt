@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import pe.fernan.ui.common.UiState
 import pe.fernan.ui.common.asUiState
 import pe.fernan.ui.common.mapSuccess
@@ -18,7 +18,7 @@ data class ChipInfo(
 )
 
 data class FavoritesModel(
-    val dogImages: List<DogImage>,
+    val dogImages: List<AnimalImage>,
     val filterChipsInfo: Set<ChipInfo>,
 )
 
@@ -29,9 +29,9 @@ sealed interface Event {
 @Composable
 fun FavoritesPresenter(
     events: Flow<Event>,
-    favoriteImagesFlow: Flow<List<DogImage>>
+    favoriteImagesFlow: Flow<List<AnimalImage>>
 ): UiState<FavoritesModel> {
-    var favoriteImagesResult by remember { mutableStateOf<UiState<Collection<DogImage>>>(UiState.Loading) }
+    var favoriteImagesResult by remember { mutableStateOf<UiState<Collection<AnimalImage>>>(UiState.Loading) }
     var filteredBreeds by remember { mutableStateOf(emptySet<String>()) }
 
     LaunchedEffect(Unit) {

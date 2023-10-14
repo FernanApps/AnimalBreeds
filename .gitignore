@@ -1,4 +1,9 @@
 ### Android template
+
+
+# Tokens Api
+keys.properties
+
 # Gradle files
 .gradle/
 build/

@@ -2,7 +2,7 @@ package pe.fernan.ui.images
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import pe.fernan.domain.images.GetBreedImagesUseCase
 import pe.fernan.domain.images.buildBreedKey
 import pe.fernan.ui.common.UiState
@@ -20,9 +20,9 @@ class ImagesViewModel @Inject constructor(
     private val getImagesByBreedUseCase: GetBreedImagesUseCase,
 ) : ViewModel() {
 
-    private val _dogImagesState =
-        MutableStateFlow<UiState<List<DogImage>>>(UiState.Loading)
-    val dogImagesState: StateFlow<UiState<List<DogImage>>> get() = _dogImagesState
+    private val _animalImagesState =
+        MutableStateFlow<UiState<List<AnimalImage>>>(UiState.Loading)
+    val animalImagesState: StateFlow<UiState<List<AnimalImage>>> get() = _animalImagesState
 
     // Store a reference to the last launched coroutine
     private var lastFetchJob: Job? = null
@@ -36,7 +36,7 @@ class ImagesViewModel @Inject constructor(
         lastFetchJob = viewModelScope.launch(Dispatchers.IO) {
             getImagesByBreedUseCase(breedKey)
                 .asUiState()
-                .collect { state -> _dogImagesState.value = state }
+                .collect { state -> _animalImagesState.value = state }
         }
     }
 }

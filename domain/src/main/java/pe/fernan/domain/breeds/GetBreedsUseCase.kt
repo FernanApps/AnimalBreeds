@@ -23,14 +23,14 @@ class GetBreedsUseCase @Inject constructor(
             val subBreedItems = breed.subBreedsNames.map { subBreedName ->
                 BreedEntity(
                     buildDisplayName(breed.name, subBreedName),
-                    "${breed.name}_${subBreedName}"
+                    "${breed.id}_${subBreedName}"
                 )
             }
 
             listOf(
                 BreedEntity(
                     breed.name,
-                    breed.name
+                    breed.id
                 )
             ) + subBreedItems
         }

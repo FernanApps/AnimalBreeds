@@ -7,41 +7,44 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 
 @Entity(tableName = "dog_images")
-data class DogImageDataEntity(
+data class AnimalImageDataEntity(
     @PrimaryKey
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "breed_name") val breedName: String,
     @ColumnInfo(name = "is_favorite") val isFavorite: Boolean,
-    @ColumnInfo(name = "breed_key") val breedKey: String
+    @ColumnInfo(name = "breed_key") val breedKey: String,
+    @ColumnInfo(name = "animal_key") val animalKey: String
 ) {
     companion object {
-        fun DogImage.fromDogImageEntity(): DogImageDataEntity {
-            return DogImageDataEntity(
+        fun AnimalImage.fromAnimalImageEntity(): AnimalImageDataEntity {
+            return AnimalImageDataEntity(
                 url = url,
                 breedName = breedName,
                 isFavorite = isFavorite,
-                breedKey = breedKey
+                breedKey = breedKey,
+                animalKey = animalKey
             )
         }
 
-        fun DogImageDataEntity.toDogImageEntity(): DogImage {
-            return DogImage(
+        fun AnimalImageDataEntity.toAnimalImageEntity(): AnimalImage {
+            return AnimalImage(
                 url = url,
                 breedName = breedName,
                 isFavorite = isFavorite,
-                breedKey = breedKey
+                breedKey = breedKey,
+                animalKey = animalKey
             )
         }
     }
 }
 
 
-@Database(entities = [DogImageDataEntity::class], version = 1, exportSchema = false)
+@Database(entities = [AnimalImageDataEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun dogImageDao(): DogImageDao
+    abstract fun dogImageDao(): AnimalImageDao
 
     companion object {
         @Volatile

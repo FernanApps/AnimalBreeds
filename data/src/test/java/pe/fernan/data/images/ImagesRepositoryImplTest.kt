@@ -25,14 +25,14 @@ class ImagesRepositoryImplTest {
         }
     }
 
-    class FakeDogImageDao : DogImageDao {
-        private val _storedImages = MutableStateFlow<List<DogImageDataEntity>>(emptyList())
+    class FakeDogImageDao : AnimalImageDao {
+        private val _storedImages = MutableStateFlow<List<AnimalImageDataEntity>>(emptyList())
 
-        override fun getDogImagesByBreedKey(breedKey: String): Flow<List<DogImageDataEntity>> {
+        override fun getAnimalImagesByBreedKey(breedKey: String): Flow<List<AnimalImageDataEntity>> {
             return _storedImages.map { it.filter { it.breedKey == breedKey } }
         }
 
-        override fun getFavoriteDogImages(): Flow<List<DogImageDataEntity>> {
+        override fun getFavoriteAnimalImages(): Flow<List<AnimalImageDataEntity>> {
             return _storedImages.map { it.filter { it.isFavorite } }
         }
 
@@ -45,7 +45,7 @@ class ImagesRepositoryImplTest {
             return 1
         }
 
-        override fun insertAll(dogImages: List<DogImageDataEntity>) {
+        override fun insertAll(dogImages: List<AnimalImageDataEntity>) {
             _storedImages.value = dogImages
         }
     }
@@ -81,7 +81,7 @@ class ImagesRepositoryImplTest {
             Result.success(listOf("url3", "url4"))
         }
 
-        val localData = DogImageDataEntity("breedName", "breedKey", false, "localUrl")
+        val localData = AnimalImageDataEntity("breedName", "breedKey", false, "localUrl")
         fakeDao.insertAll(listOf(localData))
 
         // Act & Assert
@@ -120,14 +120,14 @@ class ImagesRepositoryImplTest {
                 Result.success(listOf("url7", "url8"))
             }
 
-            val localData = DogImageDataEntity("breedName", "breedKey", false, "localUrl")
+            val localData = AnimalImageDataEntity("breedName", "breedKey", false, "localUrl")
             fakeDao.insertAll(listOf(localData))
 
             // Act & Assert
             repository.getImagesByBreed("breedKey").test {
                 awaitItem()
 
-                val savedLocalData = fakeDao.getDogImagesByBreedKey("breedKey").first()
+                val savedLocalData = fakeDao.getAnimalImagesByBreedKey("breedKey").first()
                 savedLocalData.any { it.url == "url7" }.shouldBeTrue()
                 savedLocalData.any { it.url == "url8" }.shouldBeTrue()
 

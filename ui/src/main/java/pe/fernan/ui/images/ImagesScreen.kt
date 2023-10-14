@@ -2,6 +2,7 @@
 
 package pe.fernan.ui.images
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -32,18 +33,21 @@ import pe.fernan.ui.favorites.FavoritesViewModel
 @Composable
 fun ImagesScreen(
     navController: NavController,
-    breed: String,
+    breedId: String,
+    breedTitle: String,
     subBreed: String?
 ) {
+    Log.d("ImageScreen", "breedId $breedId === breedTitle == $breedTitle == subBreed $subBreed")
+
     val imagesViewModel: ImagesViewModel = hiltViewModel()
     val favoritesViewModel: FavoritesViewModel = hiltViewModel()
-    val dogImages by imagesViewModel.dogImagesState.collectAsStateWithLifecycle()
+    val animalImages by imagesViewModel.animalImagesState.collectAsStateWithLifecycle()
 
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberTopAppBarState())
 
-    LaunchedEffect(key1 = breed) {
-        imagesViewModel.fetchDogImages(breed, subBreed)
+    LaunchedEffect(key1 = breedId) {
+        imagesViewModel.fetchDogImages(breedId, subBreed)
     }
 
     Scaffold(
@@ -52,7 +56,7 @@ fun ImagesScreen(
             LargeTopAppBar(
                 title = {
                     Text(
-                        buildDisplayName(breed, subBreed).capitalizeWords(),
+                        buildDisplayName(breedTitle, subBreed).capitalizeWords(),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -70,10 +74,10 @@ fun ImagesScreen(
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            UiStateWrapper(dogImages) { dogImageList ->
-                DogImagesGrid(
-                    images = dogImageList
-                ) { dogImage -> favoritesViewModel.toggleFavorite(dogImage) }
+            UiStateWrapper(animalImages) { animalImagesList ->
+                AnimalImagesGrid(
+                    images = animalImagesList
+                ) { animalImage -> favoritesViewModel.toggleFavorite(animalImage) }
             }
         }
     }

@@ -1,10 +1,11 @@
 package pe.fernan.domain.images
 
-data class DogImage(
+data class AnimalImage(
     val breedName: String,
     val breedKey: String,
     val isFavorite: Boolean,
-    val url: String
+    val url: String,
+    val animalKey: String
 )
 
 fun buildBreedKey(subBreed: String?, breed: String) =

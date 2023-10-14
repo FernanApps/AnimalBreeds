@@ -1,7 +1,7 @@
 package pe.fernan.domain.favorites
 
 import app.cash.turbine.test
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -12,14 +12,14 @@ class ToggleFavoriteUseCaseTest {
     @Test
     fun `invoke updates favorite status correctly`() = runTest {
         // Given
-        val element1 = DogImage(
+        val element1 = AnimalImage(
             url = "sampleUrl1.com",
             isFavorite = false,
             breedName = "Dog",
             breedKey = "dog"
         )
 
-        val element2 = DogImage(
+        val element2 = AnimalImage(
             url = "sampleUrl2.com",
             isFavorite = true,
             breedName = "Dog",

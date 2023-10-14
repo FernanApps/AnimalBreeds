@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 apply(from = "../jacoco.gradle.kts")
 
 plugins {
@@ -10,15 +12,39 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+val addConstantApp: (String, String) -> Unit = { constName, constValue ->
+    android.defaultConfig.buildConfigField("String", constName, "\"$constValue\"")
+}
+
+val addConstantManifest: (String, String) -> Unit = { constName, constValue ->
+    android.defaultConfig.manifestPlaceholders += mapOf(constName to constValue)
+}
+
+val addConstantResValue: (String, String) -> Unit = { constName, constValue ->
+    android.defaultConfig.resValue("string", constName, "\"$constValue\"")
+}
+
+val addConstant: (String, String) -> Unit = { constName, constValue ->
+    addConstantManifest(constName, constValue)
+    addConstantApp(constName, constValue)
+    addConstantResValue(constName, constValue)
+}
+
+
 android {
     namespace = "pe.fernan.data"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = 21
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        val key: String = gradleLocalProperties(rootDir).getProperty("tokenApiKeyCat") ?: ""
+        addConstantApp("TOKEN_API_CAT", key as String)
     }
 
     buildTypes {
@@ -125,3 +151,5 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
 
 }
+
+

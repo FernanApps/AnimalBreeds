@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import pe.fernan.domain.images.DogImage
+import pe.fernan.domain.images.AnimalImage
 import pe.fernan.ui.common.UiState
 import pe.fernan.ui.common.UiStateWrapper
-import pe.fernan.ui.images.DogImagesGrid
+import pe.fernan.ui.images.AnimalImagesGrid
 
 @Composable
 fun FavoritesScreen(
@@ -43,7 +43,7 @@ fun PureFavoritesScreen(
     state: UiState<FavoritesModel>,
     navController: NavController,
     onToggleSelectedBreed: (ChipInfo) -> Unit,
-    onToggleFavorite: (DogImage) -> Unit
+    onToggleFavorite: (AnimalImage) -> Unit
 ) {
 
     val scrollBehavior = TopAppBarDefaults
@@ -62,7 +62,7 @@ fun PureFavoritesScreen(
                 } else {
                     Column {
                         BreedFilter(it.filterChipsInfo, onToggleSelectedBreed)
-                        DogImagesGrid(images = it.dogImages, onToggleFavorite = onToggleFavorite)
+                        AnimalImagesGrid(images = it.dogImages, onToggleFavorite = onToggleFavorite)
                     }
                 }
             }
